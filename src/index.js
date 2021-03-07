@@ -73,27 +73,24 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   // display them on page
   function displayToy(toy) {
-    let h2 = document.createElement("h2");
-    h2.innerText = toy.name;
-    let img = document.createElement("img");
-    img.src = toy.image;
-    img.className = "toy-avatar";
-    let p = document.createElement("p");
-    p.innerText = `${toy.likes} likes`;
-    let btn = document.createElement("button");
-    btn.id = toy.id;
-    btn.className = "like-btn";
-    btn.innerText = "Like ❤️";
+    toyCollection.innerHTML += `
+      <div class="card">
+        <h2>${toy.name}</h2>
+        <img src="${toy.image}" class="toy-avatar"></img>
+        <p>${toy.likes} likes</p>
+        <button id="${toy.id}" class="like-btn">
+          Like ❤️
+        </button>
+      </div> `;
 
-    btn.addEventListener("click", (e) => {
-      // the ${event.target.id} needed for url
-      // console.log(e.target.id);
-      likes(e);
+    const btn = document.querySelectorAll(".like-btn");
+    btn.forEach((button) => {
+      button.addEventListener("click", (e) => {
+        // the ${event.target.id} needed for url
+        // console.log(e.target.id);
+        likes(e);
+      });
     });
-    const card = document.createElement("div");
-    card.className = "card";
-    card.append(h2, img, p, btn);
-    toyCollection.append(card);
   }
 
   //make iterable object for easier displaying
