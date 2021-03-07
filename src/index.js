@@ -71,7 +71,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   // display them on page
   function displayToy(toy) {
-    toyCollection.innerHTML += `
+    toyCollection.insertAdjacentHTML(
+      "beforeend",
+      `
       <div class="card">
         <h2>${toy.name}</h2>
         <img src="${toy.image}" class="toy-avatar"></img>
@@ -79,7 +81,8 @@ document.addEventListener("DOMContentLoaded", () => {
         <button id="${toy.id}" class="like-btn">
           Like ❤️
         </button>
-      </div> `;
+      </div> `
+    );
 
     const btn = document.querySelectorAll(".like-btn");
     btn.forEach((button) => {
