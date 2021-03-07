@@ -1,4 +1,5 @@
 let addToy = false;
+const destinationURL = "http://localhost:3000/toys/";
 
 document.addEventListener("DOMContentLoaded", () => {
   fetchToys();
@@ -9,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   addBtn.addEventListener("click", () => {
     // hide & seek with the form
+    // ↓↓↓ the job of this code is to make the form go away if add toy  button has been clicked on more than once (toggler) ↓↓↓
     addToy = !addToy;
     if (addToy) {
       toyFormContainer.style.display = "block";
@@ -20,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // get request
   function fetchToys() {
-    fetch("http://localhost:3000/toys/")
+    fetch(destinationURL)
       .then((response) => response.json())
       .then((data) => {
         data.forEach(displayToy);
@@ -31,9 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // POST request
   function postToyData(e) {
     e.preventDefault();
-    const name = e.target.name.value;
-    const image = e.target.image.value;
-    const destinationURL = "http://localhost:3000/toys/";
     fetch(destinationURL, {
       method: "POST",
       headers: {
@@ -41,13 +40,12 @@ document.addEventListener("DOMContentLoaded", () => {
         Accept: "application/json",
       },
       body: JSON.stringify({
-        name: name,
-        image: image,
+        name: e.target.name.value,
+        image: e.target.image.value,
         likes: 0,
       }),
     })
       .then((response) => response.json())
-
       .then((data) => {
         let newToy = renderToys(data);
         toyCollection.append(newToy);
